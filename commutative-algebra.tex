@@ -1,0 +1,368 @@
+% \documentclass[x11names]{ltjsarticle} %! Ctrl K Ctrl 1 でプリアンブル折りたたみ （Ctrl K Ctrl J で展開） https://motamemo.com/vscode/vscode-tips/fold-unfold/
+\documentclass[8pt,x11names]{ltjsarticle}
+
+\usepackage[marginparwidth=0pt,top=15truemm,bottom=15truemm,left=10truemm,right=10truemm]{geometry} %余白の調整 https://mathlandscape.com/latex-margin/
+\usepackage{layout} %\layout で紙面のレイアウト(余白など)の図を出力
+\usepackage{anyfontsize} %フォントサイズの警告を出さない https://konoyonohana.blog.fc2.com/blog-entry-269.html
+
+
+
+%*ヘッダー、タイトルの調整用パッケージ
+\usepackage{time} %\now で時刻表示する
+\usepackage{fancyhdr} %ヘッダー、フッターの表示、調整
+
+%*括弧
+\usepackage{delimseasy} %カッコの大きさ自由自在 %https://konoyonohana.blog.fc2.com/blog-entry-333.html
+
+%*下線
+\usepackage{ulem}  %\uline{}http://xyoshiki.web.fc2.com/tex/ulem.html
+\usepackage{udline} %\ul{}改行可能な下線 https://osksn2.hep.sci.osaka-u.ac.jp/~taku/kakenhiLaTeX/udline_manual.pdf
+\usepackage{luacolor}
+\usepackage{lua-ul} %? LuaTeXで使える。改行可能  打ち消し：\strikeThrough{}、下線: \underLine{}
+\LuaULSetHighLightColor{Khaki1}  %? ハイライト: \highLight
+
+%*二段組
+%region
+\usepackage{multicol}
+\setlength{\columnseprule}{.5pt} %中央の線
+    %\begin{multicols}{段数} 文章 \end{multicols}
+\usepackage{vwcol}   %https://konoyonohana.blog.fc2.com/blog-entry-231.html
+    % \begin{vwcol}[widths={0.6,0.4},rule=0.5pt]
+    % 文章
+    % \end{vwcol}
+%endregion
+
+
+%_______________________________________________________________________________________________________
+%region                                 %*ハイパーリンク
+\usepackage{url}
+\usepackage[unicode=true,pdfusetitle]{hyperref}
+\usepackage{whitehyperref}
+\usepackage{bookmark}
+%endregion                              %*ハイパーリンクここまで
+%_______________________________________________________________________________________________________
+
+
+%_____________________________________________________________________________________________
+%region                              %*ページ背景色などの調節
+\usepackage{grayboardcol}
+%endregion                           %*ページ背景色などの調節 ここまで
+%_____________________________________________________________________________________________
+
+
+%_______________________________________________________________________________________________________
+%region                                 %*数式系パッケージ
+\usepackage{nccmath,amsmath,amssymb}
+\usepackage{mathrsfs} %花文字mathscr https://tex2e.github.io/blog/math/math-symbols
+\usepackage{latexsym} %数式で使える記号を増やす
+\usepackage[bbgreekl]{mathbbol} %https://gist.github.com/Yarakashi-Kikohshi/cf19ee163ff426196d7494b81339c3cf
+    \DeclareSymbolFontAlphabet{\mathbb}{AMSb} %大文字アルファベット黒板文字はもとの\mathbb
+    \DeclareSymbolFontAlphabet{\mathbbl}{bbold} %\mathbbl{} で小文字と数字の黒板文字
+    \DeclareMathSymbol{\bbepsilon}{\mathord}{bbold}{"0F}
+\usepackage{mymathbb} %NZQRCHの黒板文字を\CCのように実現する。（\CC,\HHを除けば\Nのようにしてもよい）
+\usepackage{bbm} %万能な黒板文字
+\usepackage{mathtools}
+\mathtoolsset{showonlyrefs=true} %参照している数式のみ番号をつける 
+\usepackage{empheq} %数式の囲いに使う https://konoyonohana.blog.fc2.com/blog-entry-428.html
+\usepackage{physics}
+\usepackage{bm} %ベクトル入力簡略化
+% \usepackage{esvect} %矢印ベクトル表記
+\usepackage{amsthm}  %定理証明環境
+\usepackage{stmaryrd} %\mapsfrom で左向き対応矢印
+\usepackage{aligned-overset} %\overset{text}&{=}のように&を書けば、align環境で位置合わせできる
+\usepackage{witharrows}%数式で式変形の意味を表す矢印を描く https://ftp.yz.yamagata-u.ac.jp/pub/CTAN/macros/generic/witharrows/witharrows.pdf
+\usepackage{youngtab} %ヤング図形、Young図形
+\usepackage{ytableau} %ヤング図形、Young図形
+%endregion                              %*数式系パッケージここまで
+%_______________________________________________________________________________________________________
+
+
+%_______________________________________________________________________________________________________
+%region                                 %*通常の定理環境
+%*amsthmパッケージの設定 https://mathlandscape.com/latex-amsthm/
+    \theoremstyle{definition}
+    \newtheorem{thm}{定理}[section]
+    \newtheorem*{thm*}{定理}
+    \newtheorem{deff}[thm]{定義}
+    \newtheorem*{deff*}{定義}
+    \newtheorem{propp}[thm]{命題}
+    \newtheorem*{propp*}{命題}
+    
+
+%endregion                              %*通常の定理環境ここまで
+%_______________________________________________________________________________________________________
+
+
+%_______________________________________________________________________________________________________
+%region                                    %*tcolorbox
+\usepackage[many]{tcolorbox}
+\tcbuselibrary{breakable}
+\usepackage{graybox2} %色設定を読み込む
+\usepackage{mytcbox} %定理環境などのboxの定義
+%\usepackage{mytcbox_short} %定理と式番号の統一をしていないもの
+\usepackage{kaitou}
+
+%TODO 定理のカウンタのカスタム 部-section.subsection.通し番号 の形になる
+% \def\theeq#1{\arabic{section}.\arabic{subsection}.\the\value{#1}}
+
+
+%endregion                                 %*tcolorbox
+%_______________________________________________________________________________________________________
+
+
+%_______________________________________________________________________________________________________
+%region                                 %*囲みフレーム
+%途中で改ページ可能な囲みフレームの生成 https://konoyonohana.blog.fc2.com/blog-entry-195.html
+\usepackage{framed,color}
+
+%題名付き囲みフレームの生成 http://www.yamamo10.jp/yamamoto/comp/latex/make_doc/box/box.php
+\usepackage{ascmac}
+\usepackage{fancybox}
+%endregion                              %*囲みフレームここまで
+%_______________________________________________________________________________________________________
+
+
+%_______________________________________________________________________________________________________
+%region                                 %*フォント変更
+\usepackage{myfontlua}
+\usepackage{graphicx}
+\usepackage{bxcoloremoji}
+%endregion                              %*フォント変更ここまで
+%_______________________________________________________________________________________________________
+
+
+%_______________________________________________________________________________________________________
+%region                                 %*見出し(セクション)・目次 などの調整
+\usepackage{my-maketitle}
+\usepackage{am-titlesec}
+%セクションの番号をどこまで表示するか
+\setcounter{secnumdepth}{4}
+%目次にどこまで表示するか 3ならsubsubまで
+\setcounter{tocdepth}{3}
+%endregion                              %*見出し(セクション)・目次 などの調整 ここまで
+%_______________________________________________________________________________________________________
+
+
+%_______________________________________________________________________________________________________
+%region                                 %*図に使うもの tikzなど
+\usepackage{tikz}
+\usetikzlibrary{cd,intersections, calc, arrows.meta,quotes,angles}
+\usepackage{bxpapersize}
+\usepackage[absolute,overlay]{textpos} %図の配置を好きにする
+\usepackage{wrapfig} %図の回り込みにつかう
+%endregion                              %*図に使うもの tikzなど ここまで
+%_______________________________________________________________________________________________________
+
+
+%*画像
+\usepackage{pdfpages} %別のPDFのページをLaTeXのPDFに挿入 https://abenori.blogspot.com/2015/07/pdfpages.html
+\usepackage{wrapfig} %画像に回り込ませる http://xyoshiki.web.fc2.com/tex/wrapfig.html
+
+
+%*footnoteの変更
+\renewcommand\thefootnote{{\dag}\arabic{footnote}}
+\renewcommand{\thempfootnote}{{\dag}\arabic{mpfootnote}}
+\interfootnotelinepenalty=10000
+
+
+%______________________________________________________________________________________________________
+%region                                 %* enumerate の変更
+\usepackage[inline]{enumitem} %enumitem のオプション等 https://konoyonohana.blog.fc2.com/blog-entry-58.html
+\setlist{nolistsep} %itemizeなどの前の空白をなくす
+%enumerateのitem変更
+\renewcommand{\labelenumi}{(\arabic{enumi})}            %item 1段階目 (1)(2)(3)
+\renewcommand{\labelenumii}{(\roman{enumii})}           %item 2段階目 (i)(ii)(iii)
+\renewcommand{\labelenumiii}{(\roman{enumii}-\alph{enumiii})}  %item 3段階目 (i-a) (i-b) ※(2段階目のカウンタ-3段階目のカウンタ) の表記
+\renewcommand{\labelenumiv}{(\Alph{enumiv})}
+%itemizeのitem変更
+% \renewcommand{\labelitemi}{\bullet} %itemizeのitemを変更
+% \renewcommand{\labelitemii}{\star} %itemizeのitemを変更
+% \renewcommand{\labelitemiii}{\ast} %itemizeのitemを変更
+% \renewcommand{\labelitemiv}{・} %itemizeのitemを変更
+%description 変更
+\renewcommand{\descriptionlabel}[1]{{\hspace{\labelsep}\textbf{#1}}} %descriptionのフォント
+%endregion
+%______________________________________________________________________________________________________
+
+
+%_______________________________________________________________________________________________________
+%region                                 %*underbrace 系
+%overunderbraces
+\usepackage{oubraces}
+
+%underbraceの文字数が多いときのための \adunderbrace
+%region   underbraceの文字数が多いときのための \adunderbrace
+\usepackage{ifthen}
+\newlength{\wdTempA}
+\newlength{\wdTempB}
+\newcommand{\adunderbrace}[2]{%
+\settowidth{\wdTempA}{$#1$}%
+\settowidth{\wdTempB}{${\scriptstyle #2}$}%
+\ifthenelse{\wdTempA<\wdTempB}{%
+\hspace*{.5\wdTempA}\hspace*{-.5\wdTempB}%
+\underbrace{#1}_{#2}%
+\hspace*{.5\wdTempA}\hspace*{-.5\wdTempB}%
+}{%
+\underbrace{#1}_{#2}%
+}%
+}%
+%endregion
+%endregion                              %*underbrace 系 ここまで
+%_______________________________________________________________________________________________________
+
+
+% _______________________________________________________________________________________________________
+% region                                 %*ユーザー定義 newcommand
+\usepackage{mycommand}
+% endregion                              %*ユーザー定義 newcommand ここまで
+% _______________________________________________________________________________________________________
+
+%*分割TeXファイルの作成
+% \usepackage{docmute} %inputなどのプリアンブルを無視 https://qiita.com/Yarakashi_Kikohshi/items/b3a84f23022393208aab
+% \usepackage{ifthen} %inputするサブファイルとそれらをまとめるメインファイル両方にbibtexを適用するために必要  https://mikegamo.hatenablog.com/entry/2019/12/07/175646
+% \newcounter{masterflag}
+
+%TODO 索引はデフォルトでコメントアウトしている________________________________________________________________
+%!______________________________________________________________________________________________________
+%region                                         %*索引
+
+
+% %*利用方法
+% %* \index{たんごat単語}，入れ子構造は\index{たんご@単語!のよみかたatーーの読み方}のように．美文書169
+% %* ページ数ではなくどこどこを見よ と書きたい場合は \index{わーどatワード|see{単語}} のように書くと，ページ番号の代わりに 「→単語」となる
+% %* http://plaza.harmonix.ne.jp/~tama-h/styleman/mendex.html
+% %ターミナルで 「mendex ファイル名」(hoge.texなら「mendex hoge」)
+
+% \usepackage{sakuin}
+
+%endregion
+%!______________________________________________________________________________________________________
+
+%左側にゴシックでタイトルを表示
+\titleformat{name=\section,numberless}{\vspace{10pt}\fontsize{20pt}{20pt}\gtfamily\sffamily\upshape\selectfont}{#1}{1\zw}{}
+
+\begin{document}
+
+%------------------------------------------------------------------------------------------------------
+%region                             %TODO ヘッダー・フッター fancy
+    \pagestyle{fancy}
+    \lhead{\leftmark} %ヘッダ左
+    \chead{} %ヘッダ中央
+    \rhead{\rightmark} %ヘッダ右．
+    \lfoot{\hyperref[mokuji]{目次にジャンプ}} %フッタ左
+    \cfoot{\thepage} %フッタ中央
+    \rfoot{\empty} %フッタ右
+%endregion
+%------------------------------------------------------------------------------------------------------
+
+
+%------------------------------------------------------------------------------------------------------
+%region                                %TODO タイトルや著者名
+    \title{可換環論}
+    \subtitle{$\mathfrak{commutative\ \ algebra}$} %使わない場合コメントアウト
+    % \titleurl{\url{}} %使わない場合コメントアウト
+    \author{}
+    \date{} %* \nowで時刻表示
+    \maketitle
+    \thispagestyle{empty} %右上の謎のページ番号(fancyによる)を非表示にする。
+%endregion
+%------------------------------------------------------------------------------------------------------
+
+
+\label{mokuji} %目次にジャンプするためのラベル \hyperref[mokuji]{目次にジャンプ}
+% \addcontentsline{toc}{section}{\texorpdfstring{目次}{目次}}  %目次を目次に追加
+\pdfbookmark[0]{目次}{mokuji} %目次をPDFのしおりのみに追加
+\tableofcontents %*目次表示
+% \begin{multicols*}{1}  %*を多段組にする。
+% \tableofcontents       %デフォルトではコメントアウトしておく
+% \end{multicols*}
+
+
+
+%* Ctrl K Ctrl 1 でプリアンブル折りたたみ （Ctrl K Ctrl J で展開） https://motamemo.com/vscode/vscode-tips/fold-unfold/
+%* Ctrl K Ctrl 2 で以下の文書はじめの諸々折りたたみ
+%* ctrl + alt + , で数式プレビュー
+
+% \setcounter{masterflag}{1} %分割ファイルの際メインのみコメント解除。メインファイルをコンパイルするときのみ masterflag=1となる
+%TODO
+% 共通
+        % 1・・・ 1つ以上索引コマンド(\indexや\textbfs)をつかったあとにプリアンブルの「\usepackage{sakuin}」をコメント解除
+% 分割ファイルする場合
+    % メインファイル
+        % 1・・・ プリアンブルの「分割TeXファイルの作成」をコメント解除
+        % 2・・・ \begin{document}の後ろの 「\setcounter{masterflag}{1}」 をコメント解除
+        % 3・・・ bibファイルを使う場合、文章末の 「以下はメインサブともにコメントアウト解除」 をコメント解除
+    % サブファイル
+        % 1・・・ プリアンブルの「分割TeXファイルの作成」をコメント解除
+        % 2・・・ bibファイルを使う場合、文章末の 「以下はメインサブともにコメントアウト解除」 をコメント解除
+
+
+\section*{はじめに}
+
+\section{環}
+
+
+
+
+
+
+
+%! --------------------------------------------------------------------------------------------------------
+%! 索引はプリアンブル含めてデフォルトではコメントアウトしている。もし使いたければ
+%! プリアンブルのコメントアウトを解除した上で下もコメントアウトを解除して使うこと。（\indexなしでやるとエラー吐く）
+%region                                   %TODO 索引出力(コメントアウト)
+
+% \makeatletter %自動的に二段組になることを防ぐ
+% \let\multicols\@undefined 
+% \makeatother
+% \newpage
+% \addcontentsline{toc}{section}{\texorpdfstring{索引}{索引}}  %索引を目次に追加
+% \printindex %索引生成
+
+%endregion  %!-------------------------------------------------------------------------------------------
+
+
+%------------------------------------------------------------------------------------------------------
+%region                                 %TODO 参考文献リスト
+%%%%%%%             https://medemanabu.net/latex/cite/  参照
+%%%%%%              https://medemanabu.net/latex/thebibliography-bibitem/   作成
+%%%%%%    表示名を上から順に数字にする場合[]は不要。例えば[雪江]と本文中に出したいなら、そのように書く。
+%%%%%%%  \cite{参照キー}	参考文献の参照キーを指定します．
+%%%%%%   \cite[コメント]{参照キー}	参考文献の補足として「コメント」を指定することができます．コメントは省略可能です．
+%%%%%     \cite{参照キー,参照キー,参照キー}	複数の参考文献を参照する場合は「,」カンマ区切りで参考キーを並べます．
+%%%%%
+
+%TODO 直接記入の場合
+% \begin{thebibliography}{99} %数字は合計の参考文献数以上に設定すれば良い
+% %\bibitem[久保川]{kubokawa} 久保川達也 『現代数理統計学の基礎』 (2017)        のように
+% \bibitem[]{}
+% \end{thebibliography}
+
+
+%TODO bibファイルを使う場合
+
+%%*通常
+% \bibliographystyle{amsplain}
+% \bibliography{}
+
+%%*分割ファイルする場合
+    %https://mikegamo.hatenablog.com/entry/2019/12/07/175646
+% \setcounter{masterflag}{0} %? メインファイルのみ 解除(masterflag=0の場合のみbibが読み込まれる)
+
+    %%*以下はメインサブともにコメントアウト解除
+    % \ifthenelse{\value{masterflag} = 0}
+    % {
+    % %then: masterflag=0
+    % \bibliographystyle{amsplain}
+    % \bibliography{} %bibファイルの名前を入れよ
+    % }
+    % {  %else: masterflag=1のときはなにもなし
+    % }
+
+%endregion                              %参考文献リストここまで
+%------------------------------------------------------------------------------------------------------
+
+\end{document}
+%? ******************************************************************************************************
+%? *                                            文書終了                                               **
+%? ******************************************************************************************************
